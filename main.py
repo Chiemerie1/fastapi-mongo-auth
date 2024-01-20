@@ -9,20 +9,20 @@ from typing import Annotated
 
 app = FastAPI()
 
-oauth_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 @app.get("/")
 async def root():
     return {"message": "This is the root of the app"}
 
 
-@app.post("/website/create/user")
+@app.post("/api/create/user")
 async def user(user: user_schema.UserDefault):
     return {"user": user}
 
 
-@app.get("/website/user/login")
-async def login(token: Annotated[str, Depends(oauth_scheme)]):
+@app.get("/api/user/login")
+async def login(token: Annotated[str, Depends(oauth2_scheme)]):
     return {
         "token": token
     }
