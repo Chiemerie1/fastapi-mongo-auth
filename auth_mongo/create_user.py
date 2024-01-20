@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 
 
 
@@ -9,5 +10,6 @@ class User(BaseModel):
     phone: str
     password: str
     confirm_password: str
+    date : datetime
 
     
