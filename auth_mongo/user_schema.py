@@ -2,6 +2,7 @@ from pydantic import BaseModel
 import random
 import string
 import random
+from datetime import datetime
 
 
 
@@ -18,6 +19,7 @@ class UserDefault(BaseModel):
     username: str
     email: str
     phone: int
+    date: datetime
     
     class Config:
         orm_mode = True
