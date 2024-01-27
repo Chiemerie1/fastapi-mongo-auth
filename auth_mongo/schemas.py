@@ -3,6 +3,7 @@ import random
 import string
 import random
 from datetime import datetime
+from fastapi import Form
 
 
 
@@ -13,28 +14,29 @@ def code():
 
 
 class UserDefault(BaseModel):
-    _id: code()
-    first_name: str
-    last_name: str
-    username: str
-    email: str
-    phone: int
+    _id: str = code()
+    first_name: str = Form()
+    last_name: str = Form()
+    username: str = Form()
+    email: str = Form()
+    phone: str = Form()
+    password: str = Form()
     date: datetime
-    
+        
     class Config:
-        orm_mode = True
+        from_attributes = True
     
 
-class UserPassword(UserDefault):
-    password: str
-    confirm_password: str
+# class UserPassword(UserDefault):
+#     password: str
+#     confirm_password: str | None
     
-    def password_check(cls):
-        if len(cls.password) != len(cls.confirm_password):
-            raise  ValueError("Both passwords are not the same length")
-        elif cls.password != cls.confirm_password:
-            raise ValueError("both passwords must be the same")
-        return cls.password
+#     def password_check(cls):
+#         if len(cls.password) != len(cls.confirm_password):
+#             raise  ValueError("Both passwords are not the same length")
+#         elif cls.password != cls.confirm_password:
+#             raise ValueError("both passwords must be the same")
+#         return cls.password
     
     
 
@@ -48,7 +50,17 @@ class UserPermission(UserDefault):
 
 
 
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: str | None = None
+
+
         
+
         
 
 # class Config:
