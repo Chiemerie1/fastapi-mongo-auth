@@ -21,22 +21,17 @@ class UserDefault(BaseModel):
     email: str = Form()
     phone: str = Form()
     password: str = Form()
+    confirm_password: str = Form()
     date: datetime
         
     class Config:
         from_attributes = True
     
-
-# class UserPassword(UserDefault):
-#     password: str
-#     confirm_password: str | None
     
-#     def password_check(cls):
-#         if len(cls.password) != len(cls.confirm_password):
-#             raise  ValueError("Both passwords are not the same length")
-#         elif cls.password != cls.confirm_password:
-#             raise ValueError("both passwords must be the same")
-#         return cls.password
+    def password_check(self):
+        if self.password != self.confirm_password:
+            raise ValueError("Passwords do not match")
+        return self.password
     
     
 
@@ -74,3 +69,4 @@ class TokenData(BaseModel):
 #     if "high_risk_period_start" in values and v == values["high_risk_period_start"]:
 #         raise ValueError("The high_risk_period_start and high_risk_period_end cannot be the same")
 #     return v
+    

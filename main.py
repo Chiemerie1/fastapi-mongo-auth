@@ -32,7 +32,12 @@ async def create_user(user: UserDefault):
         "password": hashed_password.decode("utf-8"),
         "date": user.date
     }
-    save_user = user_record.insert_one(user_info)
+    try:
+        user.password_check()
+        save_user = user_record.insert_one(user_info)
+    except ValueError as err:
+        return {"message": "e no wok"}
+    
     return {"message": f"{user.username} has been created succefully"}
 
 
